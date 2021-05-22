@@ -4,7 +4,7 @@ import time
 # 调用方法:实例化类后调用turn函数，在其后用time.sleep()延时
 class Window: # 最后关闭窗口不可手动关闭，否则会弹出空白窗口并报错
     def __init__(self, max):
-        plt.ion()
+        # plt.ion()
         self.max = max
         self.fig = plt.figure()
         self.fig.patch.set_facecolor('black')
@@ -20,7 +20,7 @@ class Window: # 最后关闭窗口不可手动关闭，否则会弹出空白窗�
         self.ax.patch.set_facecolor("black")
         self.ax.plot(self.frame_theta, self.frame_r, linewidth=3, color='green')
     def turn(self, theta, r): # 传入极角与极径(>0)
-        # 刷新率8Hz
+        # 由绘图速度所限刷新率最高为8Hz
         start = time.time()
         if r <= 0:
             r = 0.1
@@ -35,18 +35,19 @@ class Window: # 最后关闭窗口不可手动关闭，否则会弹出空白窗�
         # print(time.time() - start)
         plt.clf()
         plt.ioff()
-win = Window(50)
-step = 4
-while 1:
-    for i in range(0, 314, step):
-        start = time.time()
-        win.turn(i / 100, 50)
-        while time.time() - start <= 1 / 8:
-            print(1)
-            pass
-    for i in range(0, 314, step):
-        start = time.time()
-        win.turn((314 - i) / 100, 50)
-        while time.time() - start <= 1 / 8:
-            print(1)
-            pass
+if __name__ == '__main__':
+    win = Window(50)
+    step = 4
+    while 1:
+        for i in range(0, 314, step):
+            start = time.time()
+            win.turn(i / 100, 50)
+            while time.time() - start <= 1 / 8:
+                print(1)
+                pass
+        for i in range(0, 314, step):
+            start = time.time()
+            win.turn((314 - i) / 100, 50)
+            while time.time() - start <= 1 / 8:
+                print(1)
+                pass
